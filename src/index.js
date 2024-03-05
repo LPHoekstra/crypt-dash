@@ -5,12 +5,14 @@ import reportWebVitals from "./reportWebVitals"
 import GlobalStyle from "./styles/GlobalStyle"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
+import NavBar from "./components/Navbar"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <Router>
       <GlobalStyle />
+      <NavBar />
       <Header />
       <Routes>
         <Route path="/" element={<Dashboard />} />

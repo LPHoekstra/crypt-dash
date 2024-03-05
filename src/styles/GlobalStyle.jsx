@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components"
+import colors from "./colors"
 
 const StyledGlobalStyle = createGlobalStyle`
 * {
@@ -13,22 +14,22 @@ body {
     h1 {
         font-size: 28px;
         font-weight: 600;
-        color: #343C6A;
+        color: ${colors.primary2};
     }
     h2 {
         font-size: 22px;
         font-weight: 600;
-        color: #343C6A;
+        color: ${colors.primary2};
     }
     h3 {
         font-size: 18px;
         font-weight: 500;
-        color: #343C6A;
+        color: ${colors.primary2};
     }
     h4 {
         font-size: 20px;
         font-weight: 600;
-        color: #343C6A;
+        color: ${colors.primary2};
     }
 }
 `
