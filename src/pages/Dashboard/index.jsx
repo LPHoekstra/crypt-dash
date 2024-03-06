@@ -1,10 +1,16 @@
+import styled from "styled-components"
+import Cards from "../../components/Cards"
 
+const DashboardContenair = styled.div`
+  padding: 25px;
+`
 
-function App() {
+function DashBoard() {
   return (
-    <div>
-    </div>
-  );
+    <DashboardContenair>
+      <Cards></Cards>
+    </DashboardContenair>
+  )
 }
 
-export default App;
+export default DashBoard

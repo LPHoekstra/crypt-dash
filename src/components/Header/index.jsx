@@ -3,7 +3,8 @@ import { ReactComponent as IconMenu } from "../../assets/iconMenu.svg"
 import logo from "../../assets/image/Murky.jpg"
 import { ReactComponent as SearchIcon } from "../../assets/searchIcon.svg"
 import colors from "../../styles/colors"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { NavBarContext } from "../../context"
 
 const HeaderBloc = styled.header`
   padding: 25px 25px 20px 25px;
@@ -56,11 +57,14 @@ const Test = styled.span`
 
 function Header() {
   const [hideOnFocus, setHideOnFocus] = useState(false)
+  const { setNavBar } = useContext(NavBarContext)
 
   return (
     <HeaderBloc>
       <HeaderContenair>
-        <IconMenu />
+        <div onClick={() => setNavBar(true)}>
+          <IconMenu />
+        </div>
         <h1>Overview</h1>
         <Logo src={logo} alt="Logo" />
       </HeaderContenair>
