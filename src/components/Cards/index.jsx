@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import styled from "styled-components"
 import colors from "../../styles/colors"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -6,16 +5,6 @@ import { FreeMode } from "swiper/modules"
 import "swiper/css/free-mode"
 import "swiper/css"
 
-const HeadingContenair = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const SeeAll = styled(Link)`
-  font-size: 20px;
-  text-decoration: underline;
-  color: ${colors.primary2};
-`
 const PremiereCards = styled.div`
   background-color: ${colors.primary3};
   height: 100%;
@@ -37,10 +26,6 @@ const Slide = styled(SwiperSlide)`
 function Cards() {
   return (
     <div>
-      <HeadingContenair>
-        <h2>My Cards</h2>
-        <SeeAll to="">See All</SeeAll>
-      </HeadingContenair>
       <Swiper
         spaceBetween={20}
         width={265}
