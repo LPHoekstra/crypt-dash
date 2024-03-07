@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Cards from "../../components/Cards"
 import colors from "../../styles/colors"
 import { Link } from "react-router-dom"
+import RecentTransation from "../../components/RecentTransaction"
 
 const DashboardContenair = styled.div`
   padding: 25px;
@@ -24,6 +25,8 @@ const Recent = styled.h2`
   margin-top: 20px;
 `
 
+//API JSON pour stocker le fetch de l'api Binance
+
 function DashBoard() {
   return (
     <DashboardContenair>
@@ -33,6 +36,7 @@ function DashBoard() {
       </HeadingContenair>
       <Cards></Cards>
       <Recent>Recent Transaction</Recent>
+      <RecentTransation />
     </DashboardContenair>
   )
 }
