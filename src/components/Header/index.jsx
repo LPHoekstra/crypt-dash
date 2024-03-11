@@ -48,9 +48,10 @@ const PlaceHolder = styled.div`
   top: 50%;
   left: 20px;
   transform: translate(0, -50%);
+  pointer-events: none;
 `
 
-const Test = styled.span`
+const SearchSomething = styled.span`
   color: ${colors.searchBarText};
   display: ${(props) => (props.$hideOnFocus ? "none" : "inline")};
 `
@@ -78,7 +79,9 @@ function Header() {
         />
         <PlaceHolder>
           <SearchIcon />
-          <Test $hideOnFocus={hideOnFocus}>Search for something</Test>
+          <SearchSomething $hideOnFocus={hideOnFocus}>
+            Search for something
+          </SearchSomething>
         </PlaceHolder>
       </SearchBarContenair>
     </HeaderBloc>
