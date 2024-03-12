@@ -25,3 +25,35 @@ export function useFetch(url) {
   }, [url])
   return { isLoading, data, error }
 }
+
+export function PostFetch(url, req) {
+  const [data, setData] = useState({})
+  const [isLoading, setLoading] = useState(false)
+  // const [error, setError] = useState({})
+
+  useEffect(() => {
+    if (!url) return
+    setLoading(true)
+
+    async function fetchData() {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(req),
+        })
+        const data = await response.json()
+        setData(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [url, req])
+  return { data, isLoading }
+}
