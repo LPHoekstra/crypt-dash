@@ -7,6 +7,7 @@ import { ReactComponent as Investments } from "../../assets/component/NavBar/Inv
 import close from "../../assets/component/NavBar/close.png"
 import { useContext } from "react"
 import { NavBarContext } from "../../context"
+import { Link } from "react-router-dom"
 
 const NavBarContenair = styled.div`
   position: absolute;
@@ -36,11 +37,12 @@ const Text = styled.span`
   font-weight: 500;
 `
 
-const ItemContenair = styled.div`
+const ItemContenair = styled(Link)`
   display: flex;
   gap: 20px;
   margin-bottom: 35px;
   margin-left: 30px;
+  text-decoration: none;
 `
 
 function NavBar() {
@@ -62,7 +64,7 @@ function NavBar() {
           onClick={() => setNavBar(false)}
         />
       </LogoContenair>
-      <ItemContenair>
+      <ItemContenair to="/">
         <Dashboard />
         <Text>Dashboard</Text>
       </ItemContenair>

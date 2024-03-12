@@ -5,6 +5,7 @@ import { ReactComponent as SearchIcon } from "../../assets/searchIcon.svg"
 import colors from "../../styles/colors"
 import { useContext, useState } from "react"
 import { NavBarContext } from "../../context"
+import { Link } from "react-router-dom"
 
 const HeaderBloc = styled.header`
   padding: 25px 25px 20px 25px;
@@ -34,10 +35,6 @@ const SearchBar = styled.input`
   border: none;
   background-color: ${colors.searchBarBackground};
   padding: 12px 45px;
-
-  &:focus {
-    outline-color: ${colors.primary2};
-  }
 `
 
 const PlaceHolder = styled.div`
@@ -67,7 +64,9 @@ function Header() {
           <IconMenu />
         </div>
         <h1>Overview</h1>
-        <Logo src={logo} alt="Logo" />
+        <Link to="/accout-creation">
+          <Logo src={logo} alt="Logo" />
+        </Link>
       </HeaderContenair>
       <SearchBarContenair>
         <SearchBar

@@ -31,6 +31,16 @@ body {
         font-weight: 600;
         color: ${colors.primary2};
     }
+    
+    label {
+        color: ${colors.label};
+    }
+
+    input {
+        &:focus {
+        outline-color: ${colors.primary2};
+      }
+    }
 }
 `
 

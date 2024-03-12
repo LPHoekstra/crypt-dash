@@ -8,6 +8,8 @@ const colors = {
   searchBarBackground: "#F5F7FA",
   searchBarText: "#8BA3CB",
   cardsText1: "#FFFFFF",
+  label: "#232323",
+  inputBorder: "#DFEAF2",
 }
 
 export default colors
