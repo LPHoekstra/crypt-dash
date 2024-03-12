@@ -64,7 +64,7 @@ function Header() {
           <IconMenu />
         </div>
         <h1>Overview</h1>
-        <Link to="/accout-creation">
+        <Link to="/login">
           <Logo src={logo} alt="Logo" />
         </Link>
       </HeaderContenair>

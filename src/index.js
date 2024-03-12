@@ -7,7 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
 import NavBar from "./components/Navbar"
 import { NavBarProvider } from "./context"
-import AccountCreation from "./components/AccountCreation"
+import AccountCreation from "./components/Signup"
+import Login from "./components/Login"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
@@ -20,7 +21,8 @@ root.render(
       </NavBarProvider>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/accout-creation" element={<AccountCreation />} />
+        <Route path="/signup" element={<AccountCreation />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   </React.StrictMode>

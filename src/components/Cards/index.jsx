@@ -64,7 +64,7 @@ const Slide = styled(SwiperSlide)`
 
 function Cards() {
   const response = useFetch(
-    "http://localhost:4000/api/snapshot/65eee1c4768b53c9ecb70675"
+    "http://localhost:4000/api/donnees/snapshot/65eee1c4768b53c9ecb70675"
   )
   const data = response.data
 
