@@ -63,9 +63,7 @@ const Slide = styled(SwiperSlide)`
 `
 
 function Cards() {
-  const response = useFetch(
-    "http://localhost:4000/api/donnees/snapshot/65eee1c4768b53c9ecb70675"
-  )
+  const response = useFetch("http://localhost:4000/api/auth/user-information")
   const data = response.data
 
   return (
@@ -81,7 +79,7 @@ function Cards() {
             <PremiereCardsContenair>
               <Balance>
                 <p>Balance</p>
-                <span>{data.totalAssetOfBtc} BTC</span>
+                <span>{data.postalCode} BTC</span>
               </Balance>
               <Compte>
                 <p>COMPTE</p>
