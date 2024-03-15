@@ -6,24 +6,28 @@ import GlobalStyle from "./styles/GlobalStyle"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
 import NavBar from "./components/Navbar"
-import { NavBarProvider } from "./context"
-import AccountCreation from "./components/Signup"
+import { ConnectedProvider, NavBarProvider } from "./context"
 import Login from "./components/Login"
+import Setting from "./pages/Setting"
+import Signup from "./pages/Signup"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <Router>
       <GlobalStyle />
-      <NavBarProvider>
-        <NavBar />
-        <Header />
-      </NavBarProvider>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/signup" element={<AccountCreation />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <ConnectedProvider>
+        <NavBarProvider>
+          <NavBar />
+          <Header />
+        </NavBarProvider>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/setting" element={<Setting />} />
+        </Routes>
+      </ConnectedProvider>
     </Router>
   </React.StrictMode>
 )

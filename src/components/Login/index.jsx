@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import { Link, Navigate } from "react-router-dom"
 import colors from "../../styles/colors"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Cookies from "js-cookie"
+import { ConnectedContext } from "../../context"
 
 const Signup = styled(Link)`
   text-align: center;
@@ -28,8 +29,8 @@ async function submitForm(req) {
     } else {
       const token = data.token
       console.log(data)
-      Cookies.set("token", token)
-      return <Navigate to="/" />
+      Cookies.set("token", token, { expires: 1 })
+      return data.userId
     }
   } catch (error) {
     console.log(error)
@@ -52,6 +53,7 @@ function Login() {
   }
 
   const [responseServer, setResponseServer] = useState()
+  const { setIsConnected } = useContext(ConnectedContext)
 
   return (
     <div>
@@ -59,13 +61,27 @@ function Login() {
         onSubmit={(event) => {
           event.preventDefault()
           submitForm(formData)
-            .then((result) => setResponseServer(result))
+            .then((result) => {
+              if (result !== "Email ou mot de passe incorrecte") {
+                console.log("connecté pendant 1 heure")
+                setIsConnected(true)
+                setResponseServer(<Navigate to="/" />)
+              } else {
+                setResponseServer("Email ou mot de passe incorrect")
+              }
+            })
             .catch((error) => console.log(error))
         }}
       >
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" onBlur={inputChange} />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            autoComplete="email"
+            onBlur={inputChange}
+          />
         </div>
         <div>
           <label htmlFor="password">Password</label>

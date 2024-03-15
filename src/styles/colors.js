@@ -6,10 +6,14 @@ const colors = {
   darkBlueGradient: "linear-gradient(#123288, #295EEC)",
   blueGradientCard: "linear-gradient(to bottom right, #4C49ED, #0A06F4)",
   searchBarBackground: "#F5F7FA",
+  background: "#F5F7FA",
+  moduleBackground: "#FFFFFF",
   searchBarText: "#8BA3CB",
   cardsText1: "#FFFFFF",
   label: "#232323",
   inputBorder: "#DFEAF2",
+  selected: "1814F3",
+  notSelected: "#718EBF",
 }
 
 export default colors

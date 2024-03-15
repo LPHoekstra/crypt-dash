@@ -45,7 +45,6 @@ body {
     form {
     display: flex;
     flex-direction: column;
-    padding: 45px;
     
         div {
         display: flex;

@@ -4,7 +4,7 @@ import logo from "../../assets/image/Murky.jpg"
 import { ReactComponent as SearchIcon } from "../../assets/searchIcon.svg"
 import colors from "../../styles/colors"
 import { useContext, useState } from "react"
-import { NavBarContext } from "../../context"
+import { ConnectedContext, NavBarContext } from "../../context"
 import { Link } from "react-router-dom"
 
 const HeaderBloc = styled.header`
@@ -56,6 +56,7 @@ const SearchSomething = styled.span`
 function Header() {
   const [hideOnFocus, setHideOnFocus] = useState(false)
   const { setNavBar } = useContext(NavBarContext)
+  const { isConnected } = useContext(ConnectedContext)
 
   return (
     <HeaderBloc>
@@ -64,9 +65,15 @@ function Header() {
           <IconMenu />
         </div>
         <h1>Overview</h1>
-        <Link to="/login">
-          <Logo src={logo} alt="Logo" />
-        </Link>
+        {isConnected === true ? (
+          <Link to="/Setting">
+            <Logo src={logo} alt="Logo" />
+          </Link>
+        ) : (
+          <Link to="/login">
+            <Logo src={logo} alt="Logo" />
+          </Link>
+        )}
       </HeaderContenair>
       <SearchBarContenair>
         <SearchBar

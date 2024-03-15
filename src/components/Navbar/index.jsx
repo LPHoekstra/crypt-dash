@@ -4,6 +4,7 @@ import { ReactComponent as Dashboard } from "../../assets/component/NavBar/Dashb
 import { ReactComponent as Transactions } from "../../assets/component/NavBar/Transactions.svg"
 import { ReactComponent as Accounts } from "../../assets/component/NavBar/Accounts.svg"
 import { ReactComponent as Investments } from "../../assets/component/NavBar/Investments.svg"
+import { ReactComponent as Setting } from "../../assets/component/NavBar/Setting.svg"
 import close from "../../assets/component/NavBar/close.png"
 import { useContext } from "react"
 import { NavBarContext } from "../../context"
@@ -15,7 +16,7 @@ const NavBarContenair = styled.div`
   height: 100%;
   width: 90%;
   z-index: 9999;
-  transition: transform 400ms ease-in-out;
+  transition: transform 200ms ease-in-out;
   transform: translateX(-400px);
   ${(props) =>
     props.$navBar
@@ -48,6 +49,9 @@ const ItemContenair = styled(Link)`
 function NavBar() {
   const { navBar, setNavBar } = useContext(NavBarContext)
 
+  const autoClose = () => {
+    setNavBar(false)
+  }
   // surlignement en bleu sur la page ou on est =>
   //    savoir sur quelle page on se trouve
   //    donner la colorations bleu
@@ -57,28 +61,27 @@ function NavBar() {
       <LogoContenair>
         <Logo />
         <h1>CryptDash.</h1>
-        <img
-          src={close}
-          alt="close"
-          height={30}
-          onClick={() => setNavBar(false)}
-        />
+        <img src={close} alt="close" height={30} onClick={autoClose} />
       </LogoContenair>
-      <ItemContenair to="/">
+      <ItemContenair to="/" onClick={autoClose}>
         <Dashboard />
         <Text>Dashboard</Text>
       </ItemContenair>
-      <ItemContenair>
+      <ItemContenair to="/" onClick={autoClose}>
         <Transactions />
         <Text>Transactions</Text>
       </ItemContenair>
-      <ItemContenair>
+      <ItemContenair to="/" onClick={autoClose}>
         <Accounts />
         <Text>Accounts</Text>
       </ItemContenair>
-      <ItemContenair>
+      <ItemContenair to="/" onClick={autoClose}>
         <Investments />
         <Text>Investments</Text>
+      </ItemContenair>
+      <ItemContenair to="/setting" onClick={autoClose}>
+        <Setting />
+        <Text>Setting</Text>
       </ItemContenair>
     </NavBarContenair>
   )

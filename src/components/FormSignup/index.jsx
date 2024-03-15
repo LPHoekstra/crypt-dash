@@ -1,4 +1,12 @@
-function AccountCreation() {
+import { useContext } from "react"
+import { ConnectedContext } from "../../context"
+import { useFetch } from "../../hooks"
+
+function FormSignup() {
+  const { isConnected } = useContext(ConnectedContext)
+  const response = useFetch("http://localhost:4000/api/auth/user-information")
+  const data = response.data
+
   return (
     <div>
       <form action="http://localhost:4000/api/auth/signup" method="post">
@@ -9,6 +17,7 @@ function AccountCreation() {
             name="yourName"
             id="yourName"
             autoComplete="name"
+            value={data.yourName}
           />
         </div>
         <div>
@@ -18,11 +27,12 @@ function AccountCreation() {
             name="userName"
             id="userName"
             autoComplete="username"
+            value={data.userName}
           />
         </div>
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" />
+          <input type="email" name="email" id="email" value={data.email} />
         </div>
         <div>
           <label htmlFor="password">Password</label>
@@ -31,6 +41,7 @@ function AccountCreation() {
             name="password"
             id="password"
             autoComplete="new-password"
+            value="**********"
           />
         </div>
         <div>
@@ -44,11 +55,12 @@ function AccountCreation() {
             name="address"
             id="address"
             autoComplete="street-address"
+            value={data.address}
           />
         </div>
         <div>
           <label htmlFor="city">City</label>
-          <input type="text" name="city" id="city" />
+          <input type="text" name="city" id="city" value={data.city} />
         </div>
         <div>
           <label htmlFor="postalCode">Postal Code</label>
@@ -57,6 +69,7 @@ function AccountCreation() {
             name="postalCode"
             id="postalCode"
             autoComplete="postal-code"
+            value={data.postalCode}
           />
         </div>
         <div>
@@ -66,12 +79,15 @@ function AccountCreation() {
             name="country"
             id="country"
             autoComplete="country-name"
+            value={data.country}
           />
         </div>
-        <button type="submit">Create Account</button>
+        <button type="submit">
+          {isConnected === true ? "Save" : "Create Account"}
+        </button>
       </form>
     </div>
   )
 }
 
-export default AccountCreation
+export default FormSignup
