@@ -17,7 +17,7 @@ function FormSignup() {
             name="yourName"
             id="yourName"
             autoComplete="name"
-            value={data.yourName}
+            defaultValue={data.yourName}
           />
         </div>
         <div>
@@ -27,12 +27,17 @@ function FormSignup() {
             name="userName"
             id="userName"
             autoComplete="username"
-            value={data.userName}
+            defaultValue={data.userName}
           />
         </div>
         <div>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" value={data.email} />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            defaultValue={data.email}
+          />
         </div>
         <div>
           <label htmlFor="password">Password</label>
@@ -41,7 +46,7 @@ function FormSignup() {
             name="password"
             id="password"
             autoComplete="new-password"
-            value="**********"
+            defaultValue="**********"
           />
         </div>
         <div>
@@ -55,12 +60,12 @@ function FormSignup() {
             name="address"
             id="address"
             autoComplete="street-address"
-            value={data.address}
+            defaultValue={data.address}
           />
         </div>
         <div>
           <label htmlFor="city">City</label>
-          <input type="text" name="city" id="city" value={data.city} />
+          <input type="text" name="city" id="city" defaultValue={data.city} />
         </div>
         <div>
           <label htmlFor="postalCode">Postal Code</label>
@@ -69,7 +74,7 @@ function FormSignup() {
             name="postalCode"
             id="postalCode"
             autoComplete="postal-code"
-            value={data.postalCode}
+            defaultValue={data.postalCode}
           />
         </div>
         <div>
@@ -79,7 +84,7 @@ function FormSignup() {
             name="country"
             id="country"
             autoComplete="country-name"
-            value={data.country}
+            defaultValue={data.country}
           />
         </div>
         <button type="submit">

@@ -18,8 +18,6 @@ export const ConnectedProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    setIsConnected(true)
-
     const timeout = setTimeout(() => {
       setIsConnected(false)
     }, 3600000)

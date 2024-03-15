@@ -1,6 +1,9 @@
 import styled from "styled-components"
 import colors from "../../styles/colors"
 import FormSignup from "../../components/FormSignup"
+import { useContext } from "react"
+import { ConnectedContext } from "../../context"
+import { Navigate } from "react-router-dom"
 
 const Background = styled.div`
   background-color: ${colors.background};
@@ -29,7 +32,9 @@ const HeadersSettingContenair = styled.div`
 `
 
 function Setting() {
-  return (
+  const { isConnected } = useContext(ConnectedContext)
+
+  return isConnected === true ? (
     <Background>
       <SecondaryBackground>
         <HeadersSettingContenair>
@@ -41,6 +46,8 @@ function Setting() {
         <FormSignup />
       </SecondaryBackground>
     </Background>
+  ) : (
+    <Navigate to="/login" />
   )
 }
 
