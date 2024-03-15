@@ -7,7 +7,7 @@ import { ReactComponent as Investments } from "../../assets/component/NavBar/Inv
 import { ReactComponent as Setting } from "../../assets/component/NavBar/Setting.svg"
 import close from "../../assets/component/NavBar/close.png"
 import { useContext } from "react"
-import { NavBarContext } from "../../context"
+import { ConnectedContext, NavBarContext } from "../../context"
 import { Link } from "react-router-dom"
 
 const NavBarContenair = styled.div`
@@ -48,6 +48,7 @@ const ItemContenair = styled(Link)`
 
 function NavBar() {
   const { navBar, setNavBar } = useContext(NavBarContext)
+  const { setIsConnected } = useContext(ConnectedContext)
 
   const autoClose = () => {
     setNavBar(false)
@@ -83,6 +84,15 @@ function NavBar() {
         <Setting />
         <Text>Setting</Text>
       </ItemContenair>
+      <Link
+        to="/"
+        onClick={() => {
+          setIsConnected(false)
+          document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+        }}
+      >
+        <h4>Se déconnecter</h4>
+      </Link>
     </NavBarContenair>
   )
 }
