@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import Cards from "../../components/Cards"
 import colors from "../../styles/colors"
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import RecentTransation from "../../components/RecentTransaction"
+import { useContext } from "react"
+import { ConnectedContext } from "../../context"
 
 const DashboardContenair = styled.div`
   padding: 25px;
@@ -28,7 +30,9 @@ const Recent = styled.h2`
 //API JSON pour stocker le fetch de l'api Binance
 
 function DashBoard() {
-  return (
+  const { isConnected } = useContext(ConnectedContext)
+
+  return isConnected ? (
     <DashboardContenair>
       <HeadingContenair>
         <h2>My Cards</h2>
@@ -38,6 +42,8 @@ function DashBoard() {
       <Recent>Recent Transaction</Recent>
       <RecentTransation />
     </DashboardContenair>
+  ) : (
+    <Navigate to="/login" />
   )
 }
 

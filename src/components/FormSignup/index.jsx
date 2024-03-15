@@ -1,15 +1,17 @@
 import { useContext } from "react"
 import { ConnectedContext } from "../../context"
 import { useFetch } from "../../hooks"
+import address from "../../styles/address"
 
 function FormSignup() {
   const { isConnected } = useContext(ConnectedContext)
-  const response = useFetch("http://localhost:4000/api/auth/user-information")
+  const response = useFetch(`${address.serveur}/api/auth/user-information`)
   const data = response.data
 
+  const actionForm = `${address.serveur}/api/auth/signup`
   return (
     <div>
-      <form action="http://localhost:4000/api/auth/signup" method="post">
+      <form action={actionForm} method="post">
         <div>
           <label htmlFor="yourName">Your Name</label>
           <input

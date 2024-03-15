@@ -48,7 +48,7 @@ const ItemContenair = styled(Link)`
 
 function NavBar() {
   const { navBar, setNavBar } = useContext(NavBarContext)
-  const { setIsConnected } = useContext(ConnectedContext)
+  const { isConnected, setIsConnected } = useContext(ConnectedContext)
 
   const autoClose = () => {
     setNavBar(false)
@@ -84,15 +84,18 @@ function NavBar() {
         <Setting />
         <Text>Setting</Text>
       </ItemContenair>
-      <Link
-        to="/"
-        onClick={() => {
-          setIsConnected(false)
-          document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
-        }}
-      >
-        <h4>Se déconnecter</h4>
-      </Link>
+      {isConnected === true ? (
+        <Link
+          to="/login"
+          onClick={() => {
+            setIsConnected(false)
+            document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+            setNavBar(false)
+          }}
+        >
+          <h4>Se déconnecter</h4>
+        </Link>
+      ) : null}
     </NavBarContenair>
   )
 }

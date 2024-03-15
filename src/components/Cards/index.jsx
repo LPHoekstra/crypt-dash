@@ -5,6 +5,7 @@ import { FreeMode } from "swiper/modules"
 import "swiper/css/free-mode"
 import "swiper/css"
 import { useFetch } from "../../hooks"
+import address from "../../styles/address"
 
 const PremiereCards = styled.div`
   background-image: ${colors.blueGradientCard};
@@ -63,7 +64,7 @@ const Slide = styled(SwiperSlide)`
 `
 
 function Cards() {
-  const response = useFetch("http://localhost:4000/api/auth/user-information")
+  const response = useFetch(`${address.serveur}/api/auth/user-information`)
   const data = response.data
 
   return (

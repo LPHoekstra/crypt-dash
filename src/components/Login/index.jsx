@@ -4,6 +4,7 @@ import colors from "../../styles/colors"
 import { useContext, useState } from "react"
 import Cookies from "js-cookie"
 import { ConnectedContext } from "../../context"
+import address from "../../styles/address"
 
 const Signup = styled(Link)`
   text-align: center;
@@ -20,7 +21,7 @@ const Form = styled.form`
 
 async function submitForm(req) {
   try {
-    const response = await fetch("http://localhost:4000/api/auth/login", {
+    const response = await fetch(`${address.serveur}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
