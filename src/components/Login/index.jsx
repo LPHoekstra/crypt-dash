@@ -11,6 +11,10 @@ const Signup = styled(Link)`
   display: block;
   color: ${colors.label};
 `
+
+const Form = styled.form`
+  padding: 45px;
+`
 // Récupérer les champs entrer et transformer le tout en JSON pour pouvoir récupérer la réponse serveur
 // créer un hooks pour les requêtes POST
 
@@ -57,13 +61,13 @@ function Login() {
 
   return (
     <div>
-      <form
+      <Form
         onSubmit={(event) => {
           event.preventDefault()
           submitForm(formData)
             .then((result) => {
               if (result !== "Email ou mot de passe incorrecte") {
-                console.log("connecté pendant 1 heure")
+                console.log("connecté pendant 24 heure")
                 setIsConnected(true)
                 setResponseServer(<Navigate to="/" />)
               } else {
@@ -94,7 +98,7 @@ function Login() {
         </div>
         <button type="submit">Login</button>
         <span>{responseServer}</span>
-      </form>
+      </Form>
       <Signup to="/signup">Inscription</Signup>
     </div>
   )
