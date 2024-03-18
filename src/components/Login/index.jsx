@@ -58,9 +58,11 @@ function Login() {
   }
 
   const [responseServer, setResponseServer] = useState()
-  const { setIsConnected } = useContext(ConnectedContext)
+  const { isConnected, setIsConnected } = useContext(ConnectedContext)
 
-  return (
+  return isConnected ? (
+    <Navigate to="/" />
+  ) : (
     <div>
       <Form
         onSubmit={(event) => {
