@@ -1,46 +1,8 @@
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { ConnectedContext } from "../../context"
 import { useFetch } from "../../hooks"
 import address from "../../styles/address"
 import Cookies from "js-cookie"
-
-function sendForm(isConnected, formData) {
-  const token = Cookies.get("token")
-  console.log(formData)
-
-  if (isConnected) {
-    fetch(`${address.serveur}/api/auth/update`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token}`,
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur réseau")
-        }
-        return response.json()
-      })
-      .catch((error) => console.error("Erreur :", error))
-  } else {
-    fetch(`${address.serveur}/api/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur réseau")
-        }
-        return response.json()
-      })
-      .catch((error) => console.error("Erreur :", error))
-  }
-}
 
 function FormSignup() {
   const { isConnected } = useContext(ConnectedContext)
@@ -56,13 +18,11 @@ function FormSignup() {
   })
 
   const response = useFetch(`${address.serveur}/api/auth/user-information`)
-  console.log(response)
   const data = response.data
 
   useEffect(() => {
     if (data) {
       setFormData({
-        ...formData,
         yourName: data.yourName || "",
         userName: data.userName || "",
         email: data.email || "",
@@ -74,6 +34,14 @@ function FormSignup() {
     }
   }, [data])
 
+  const inputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target
+      setFormData({ ...formData, [name]: value })
+    },
+    [formData]
+  )
+
   if (response.isLoading) {
     return (
       <div>
@@ -81,18 +49,36 @@ function FormSignup() {
       </div>
     )
   } else {
-    const inputChange = (e) => {
-      const { name, value } = e.target
-      setFormData({ ...formData, [name]: value })
+    const sendForm = (formData) => {
+      const token = Cookies.get("token")
+      const apiUrl = isConnected
+        ? `${address.serveur}/api/auth/update`
+        : `${address.serveur}/api/auth/signup`
+
+      console.log(formData)
+      fetch(apiUrl, {
+        method: isConnected ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Erreur réseau")
+          }
+          return response.json()
+        })
+        .catch((error) => console.error("Erreur :", error))
     }
-    console.log(formData)
 
     return (
       <div>
         <form
           onSubmit={(event) => {
             event.preventDefault()
-            sendForm(isConnected, formData)
+            sendForm(formData)
           }}
         >
           <div>
