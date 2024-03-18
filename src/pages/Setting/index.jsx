@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import colors from "../../styles/colors"
 import FormSignup from "../../components/FormSignup"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { ConnectedContext } from "../../context"
 import { Navigate } from "react-router-dom"
 
@@ -16,34 +16,68 @@ const SecondaryBackground = styled.div`
   border-radius: 15px;
 `
 
-const HeadersSetting = styled.span`
+const HeadersSetting = styled.li`
+  display: inline;
   font-size: 13px;
   font-weight: 500;
-  color: ${colors.notSelected};
   margin-left: 7px;
   margin-right: 7px;
+  color: ${colors.notSelected};
+  ${(props) =>
+    props.$selected
+      ? `
+      color: #1814F3; 
+      text-decoration: #1814F3 2px underline; 
+      text-underline-offset: 10px;`
+      : null}
 `
 
-const HeadersSettingContenair = styled.div`
-  display: flex;
-  justify-content: space-between;
+const HeadersSettingContenair = styled.nav`
   border-bottom: 1px solid #ebeef2;
   padding-bottom: 8px;
 `
 
+const HeadersList = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+`
+
+const Tabs = {
+  editProfile: "Edit Profile",
+  preference: "Preference",
+  security: "Security",
+}
+
 function Setting() {
   const { isConnected } = useContext(ConnectedContext)
+  const [onglet, setOnglet] = useState(Tabs.editProfile)
 
   return isConnected === true ? (
     <Background>
       <SecondaryBackground>
         <HeadersSettingContenair>
-          <HeadersSetting>Edit Profile</HeadersSetting>
-          <HeadersSetting>Preference</HeadersSetting>
-          <HeadersSetting>Security</HeadersSetting>
+          <HeadersList>
+            {Object.values(Tabs).map((tab) => (
+              <HeadersSetting
+                key={tab}
+                $selected={onglet === tab}
+                onClick={() => {
+                  setOnglet(tab)
+                }}
+              >
+                {tab}
+              </HeadersSetting>
+            ))}
+          </HeadersList>
         </HeadersSettingContenair>
-        <img src="" alt="" />
-        <FormSignup />
+        {onglet === Tabs.editProfile ? (
+          <FormSignup />
+        ) : onglet === Tabs.preference ? (
+          <div>preference</div>
+        ) : (
+          <div>security</div>
+        )}
       </SecondaryBackground>
     </Background>
   ) : (
