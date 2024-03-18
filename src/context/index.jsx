@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 
+// cache ou masque le navBar selon le context
 export const NavBarContext = createContext()
 
 export const NavBarProvider = ({ children }) => {

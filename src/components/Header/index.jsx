@@ -54,7 +54,9 @@ const SearchSomething = styled.span`
 `
 
 function Header() {
+  // cache le text "Search for something" dans la bar de recherche
   const [hideOnFocus, setHideOnFocus] = useState(false)
+
   const { setNavBar } = useContext(NavBarContext)
   const { isConnected } = useContext(ConnectedContext)
 
@@ -81,7 +83,10 @@ function Header() {
           name="searchbar"
           id="searchbar"
           onFocus={() => setHideOnFocus(true)}
-          onBlur={() => setHideOnFocus(false)}
+          onBlur={(event) => {
+            setHideOnFocus(false)
+            event.target.value = ""
+          }}
         />
         <PlaceHolder>
           <SearchIcon />
