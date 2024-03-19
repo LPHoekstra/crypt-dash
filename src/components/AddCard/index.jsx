@@ -34,7 +34,6 @@ function AddCard() {
     const { name, value } = event.target
     setFormData({ ...formData, [name]: value })
   }
-  console.log(formData)
 
   return (
     <div>

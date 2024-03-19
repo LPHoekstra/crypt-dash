@@ -9,6 +9,8 @@ import close from "../../assets/component/NavBar/close.png"
 import { useContext } from "react"
 import { ConnectedContext, NavBarContext } from "../../context"
 import { Link } from "react-router-dom"
+import Cookies from "js-cookie"
+import address from "../../styles/address"
 
 const NavBarContenair = styled.div`
   position: absolute;
@@ -46,6 +48,17 @@ const ItemContenair = styled(Link)`
   text-decoration: none;
 `
 
+const Item = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const Actualisation = styled.button`
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+`
+
 function NavBar() {
   const { navBar, setNavBar } = useContext(NavBarContext)
   const { isConnected, setIsConnected } = useContext(ConnectedContext)
@@ -53,6 +66,27 @@ function NavBar() {
   const autoClose = () => {
     setNavBar(false)
   }
+
+  const actualisation = () => {
+    const token = Cookies.get("token")
+
+    fetch(`${address.serveur}/api/binance/update`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur réseau")
+        }
+
+        return console.log(response.body)
+      })
+      .catch((error) => console.error(error))
+  }
+
   // surlignement en bleu sur la page ou on est =>
   //    savoir sur quelle page on se trouve
   //    donner la colorations bleu
@@ -64,38 +98,43 @@ function NavBar() {
         <h1>CryptDash.</h1>
         <img src={close} alt="close" height={30} onClick={autoClose} />
       </LogoContenair>
-      <ItemContenair to="/" onClick={autoClose}>
-        <Dashboard />
-        <Text>Dashboard</Text>
-      </ItemContenair>
-      <ItemContenair to="/" onClick={autoClose}>
-        <Transactions />
-        <Text>Transactions</Text>
-      </ItemContenair>
-      <ItemContenair to="/" onClick={autoClose}>
-        <Accounts />
-        <Text>Accounts</Text>
-      </ItemContenair>
-      <ItemContenair to="/" onClick={autoClose}>
-        <Investments />
-        <Text>Investments</Text>
-      </ItemContenair>
-      <ItemContenair to="/setting" onClick={autoClose}>
-        <Setting />
-        <Text>Setting</Text>
-      </ItemContenair>
-      {isConnected === true ? (
-        <Link
-          to="/login"
-          onClick={() => {
-            setIsConnected(false)
-            document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
-            setNavBar(false)
-          }}
-        >
-          <h4>Se déconnecter</h4>
-        </Link>
-      ) : null}
+      <Item>
+        <ItemContenair to="/" onClick={autoClose}>
+          <Dashboard />
+          <Text>Dashboard</Text>
+        </ItemContenair>
+        <ItemContenair to="/" onClick={autoClose}>
+          <Transactions />
+          <Text>Transactions</Text>
+        </ItemContenair>
+        <ItemContenair to="/" onClick={autoClose}>
+          <Accounts />
+          <Text>Accounts</Text>
+        </ItemContenair>
+        <ItemContenair to="/" onClick={autoClose}>
+          <Investments />
+          <Text>Investments</Text>
+        </ItemContenair>
+        <ItemContenair to="/setting" onClick={autoClose}>
+          <Setting />
+          <Text>Setting</Text>
+        </ItemContenair>
+        <Actualisation onClick={actualisation}>
+          Actualiser les données
+        </Actualisation>
+        {isConnected === true ? (
+          <Link
+            to="/login"
+            onClick={() => {
+              setIsConnected(false)
+              document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+              setNavBar(false)
+            }}
+          >
+            <h4>Se déconnecter</h4>
+          </Link>
+        ) : null}
+      </Item>
     </NavBarContenair>
   )
 }
