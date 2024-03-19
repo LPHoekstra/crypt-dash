@@ -1,9 +1,10 @@
-import styled from "styled-components"
-import colors from "../../styles/colors"
-import FormSignup from "../../components/FormSignup"
 import { useContext, useState } from "react"
-import { ConnectedContext } from "../../context"
 import { Navigate } from "react-router-dom"
+import styled from "styled-components"
+import AddCard from "../../components/AddCard"
+import FormSignup from "../../components/FormSignup"
+import { ConnectedContext } from "../../context"
+import colors from "../../styles/colors"
 
 const Background = styled.div`
   background-color: ${colors.background};
@@ -74,7 +75,7 @@ function Setting() {
         {onglet === Tabs.editProfile ? (
           <FormSignup />
         ) : onglet === Tabs.preference ? (
-          <div>preference</div>
+          <AddCard />
         ) : (
           <div>security</div>
         )}
