@@ -5,25 +5,26 @@ import { ReactComponent as Transactions } from "../../assets/component/NavBar/Tr
 import { ReactComponent as Accounts } from "../../assets/component/NavBar/Accounts.svg"
 import { ReactComponent as Investments } from "../../assets/component/NavBar/Investments.svg"
 import { ReactComponent as Setting } from "../../assets/component/NavBar/Setting.svg"
+import { ReactComponent as CreditCards } from "../../assets/component/NavBar/CreditCards.svg"
 import close from "../../assets/component/NavBar/close.png"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ConnectedContext, NavBarContext } from "../../context"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import Cookies from "js-cookie"
 import address from "../../styles/address"
+import colors from "../../styles/colors"
 
 const NavBarContenair = styled.div`
   position: absolute;
   background-color: white;
   height: 100%;
-  width: 90%;
+  width: 300px;
   z-index: 9999;
   transition: transform 200ms ease-in-out;
-  transform: translateX(-400px);
   ${(props) =>
     props.$navBar
       ? "transform: translateX(0)"
-      : "transform: translateX(-400px)"}
+      : "transform: translateX(-300px)"}
 `
 
 const LogoContenair = styled.div`
@@ -31,21 +32,41 @@ const LogoContenair = styled.div`
   justify-content: center;
   gap: 9px;
   padding: 25px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 `
 
 const Text = styled.span`
   font-size: 20px;
-  color: #b1b1b1;
   font-weight: 500;
+  margin-left: 20px;
 `
 
 const ItemContenair = styled(Link)`
   display: flex;
-  gap: 20px;
-  margin-bottom: 35px;
-  margin-left: 30px;
   text-decoration: none;
+  align-items: center;
+  color: ${colors.notSelectedNavBar};
+  ${(props) =>
+    props.$selected
+      ? `
+  color: ${colors.selected};
+  path {
+    fill: ${colors.selected}
+  }
+  `
+      : null}
+`
+
+const Rectangle = styled.div`
+  height: 50px;
+  width: 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-right: 25px;
+  ${(props) =>
+    props.$selected
+      ? `background-color: ${colors.primary3};`
+      : `background-color: ${colors.moduleBackground};`}
 `
 
 const Item = styled.div`
@@ -60,8 +81,24 @@ const Actualisation = styled.button`
 `
 
 function NavBar() {
+  const Tabs = {
+    dashboard: "Dashboard",
+    transactions: "Transactions",
+    accounts: "Accounts",
+    investments: "Investments",
+    creditCards: "Credit Cards",
+    setting: "Setting",
+  }
+  // récupération de l'address actuelle
+  const location = useLocation()
+  // USE
+  const [onglet, setOnglet] = useState(location.pathname)
   const { navBar, setNavBar } = useContext(NavBarContext)
   const { isConnected, setIsConnected } = useContext(ConnectedContext)
+  // changement de location au changement de page
+  useEffect(() => {
+    setOnglet(location.pathname)
+  }, [location.pathname])
 
   const autoClose = () => {
     setNavBar(false)
@@ -70,7 +107,7 @@ function NavBar() {
   const actualisation = () => {
     const token = Cookies.get("token")
 
-    fetch(`${address.serveur}/api/binance/update`, {
+    fetch(`${address.serveur}/api/binance/snapshot`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -88,8 +125,8 @@ function NavBar() {
   }
 
   // surlignement en bleu sur la page ou on est =>
-  //    savoir sur quelle page on se trouve
-  //    donner la colorations bleu
+  //    savoir sur quelle page on se trouve /
+  //    donner la colorations bleu /
   //    ajouter le rectangle bleu sur la gauche
   return (
     <NavBarContenair $navBar={navBar}>
@@ -99,25 +136,39 @@ function NavBar() {
         <img src={close} alt="close" height={30} onClick={autoClose} />
       </LogoContenair>
       <Item>
-        <ItemContenair to="/" onClick={autoClose}>
+        <ItemContenair to="/" onClick={autoClose} $selected={onglet === "/"}>
+          <Rectangle $selected={onglet === "/"} />
           <Dashboard />
-          <Text>Dashboard</Text>
+          <Text>{Tabs.dashboard}</Text>
         </ItemContenair>
         <ItemContenair to="/" onClick={autoClose}>
+          <Rectangle $selected={onglet === "/t"} />
           <Transactions />
-          <Text>Transactions</Text>
+          <Text>{Tabs.transactions}</Text>
         </ItemContenair>
         <ItemContenair to="/" onClick={autoClose}>
+          <Rectangle $selected={onglet === "/t"} />
           <Accounts />
-          <Text>Accounts</Text>
+          <Text>{Tabs.accounts}</Text>
         </ItemContenair>
         <ItemContenair to="/" onClick={autoClose}>
+          <Rectangle $selected={onglet === "/t"} />
           <Investments />
-          <Text>Investments</Text>
+          <Text>{Tabs.investments}</Text>
         </ItemContenair>
-        <ItemContenair to="/setting" onClick={autoClose}>
+        <ItemContenair to="/" onClick={autoClose}>
+          <Rectangle $selected={onglet === "/t"} />
+          <CreditCards />
+          <Text>{Tabs.creditCards}</Text>
+        </ItemContenair>
+        <ItemContenair
+          to="/setting"
+          onClick={autoClose}
+          $selected={onglet === "/setting"}
+        >
+          <Rectangle $selected={onglet === "/setting"} />
           <Setting />
-          <Text>Setting</Text>
+          <Text>{Tabs.setting}</Text>
         </ItemContenair>
         <Actualisation onClick={actualisation}>
           Actualiser les données

@@ -64,8 +64,9 @@ const Slide = styled(SwiperSlide)`
 `
 
 function Cards() {
-  const response = useFetch(`${address.serveur}/api/auth/user-information`)
+  const response = useFetch(`${address.serveur}/api/donnees/snapshot`)
   const data = response.data
+  console.log(data)
 
   return (
     <div>
@@ -80,13 +81,13 @@ function Cards() {
             <PremiereCardsContenair>
               <Balance>
                 <p>Balance</p>
-                <span>{data.postalCode} BTC</span>
+                <span>{data.asset} BTC</span>
               </Balance>
               <Compte>
                 <p>COMPTE</p>
-                <span>Binance</span>
+                <span>{data.compte}</span>
               </Compte>
-              <Id>crypto.malbourbie@gmail.com</Id>
+              <Id>{data.user}</Id>
             </PremiereCardsContenair>
           </PremiereCards>
         </Slide>

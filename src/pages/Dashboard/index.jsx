@@ -5,6 +5,7 @@ import { Link, Navigate } from "react-router-dom"
 import RecentTransation from "../../components/RecentTransaction"
 import { useContext } from "react"
 import { ConnectedContext } from "../../context"
+import BalanceHistory from "../../components/BalanceHistory"
 
 const DashboardContenair = styled.div`
   padding: 25px;
@@ -38,7 +39,8 @@ function DashBoard() {
         <h2>My Cards</h2>
         <SeeAll to="">See All</SeeAll>
       </HeadingContenair>
-      <Cards></Cards>
+      <Cards />
+      <BalanceHistory />
       <Recent>Recent Transaction</Recent>
       <RecentTransation />
     </DashboardContenair>

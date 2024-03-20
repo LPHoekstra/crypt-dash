@@ -12,8 +12,9 @@ const colors = {
   cardsText1: "#FFFFFF",
   label: "#232323",
   inputBorder: "#DFEAF2",
-  selected: "1814F3",
+  selected: "#1814F3",
   notSelected: "#718EBF",
+  notSelectedNavBar: "#b1b1b1",
 }
 
 export default colors
