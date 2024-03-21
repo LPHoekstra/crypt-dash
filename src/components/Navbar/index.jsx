@@ -78,6 +78,7 @@ const Actualisation = styled.button`
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 20px;
+  width: 173px;
 `
 
 function NavBar() {
@@ -100,10 +101,9 @@ function NavBar() {
     setOnglet(location.pathname)
   }, [location.pathname])
 
-  const autoClose = () => {
-    setNavBar(false)
-  }
-
+  // Actualisation des données
+  const [responseServer, setResponseServer] = useState("Actualiser les données")
+  const [isLoading, setIsLoading] = useState(false)
   const actualisation = () => {
     const token = Cookies.get("token")
 
@@ -114,64 +114,75 @@ function NavBar() {
         Authorization: `${token}`,
       },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur réseau")
-        }
-
-        return console.log(response.body)
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoading(false)
+        setResponseServer(data.message)
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {
+        setResponseServer(error)
+        console.error(error)
+      })
   }
 
-  // surlignement en bleu sur la page ou on est =>
-  //    savoir sur quelle page on se trouve /
-  //    donner la colorations bleu /
-  //    ajouter le rectangle bleu sur la gauche
   return (
     <NavBarContenair $navBar={navBar}>
       <LogoContenair>
         <Logo />
         <h1>CryptDash.</h1>
-        <img src={close} alt="close" height={30} onClick={autoClose} />
+        <img
+          src={close}
+          alt="close"
+          height={30}
+          onClick={() => setNavBar(false)}
+        />
       </LogoContenair>
       <Item>
-        <ItemContenair to="/" onClick={autoClose} $selected={onglet === "/"}>
+        <ItemContenair
+          to="/"
+          onClick={() => setNavBar(false)}
+          $selected={onglet === "/"}
+        >
           <Rectangle $selected={onglet === "/"} />
           <Dashboard />
           <Text>{Tabs.dashboard}</Text>
         </ItemContenair>
-        <ItemContenair to="/" onClick={autoClose}>
+        <ItemContenair to="/" onClick={() => setNavBar(false)}>
           <Rectangle $selected={onglet === "/t"} />
           <Transactions />
           <Text>{Tabs.transactions}</Text>
         </ItemContenair>
-        <ItemContenair to="/" onClick={autoClose}>
+        <ItemContenair to="/" onClick={() => setNavBar(false)}>
           <Rectangle $selected={onglet === "/t"} />
           <Accounts />
           <Text>{Tabs.accounts}</Text>
         </ItemContenair>
-        <ItemContenair to="/" onClick={autoClose}>
+        <ItemContenair to="/" onClick={() => setNavBar(false)}>
           <Rectangle $selected={onglet === "/t"} />
           <Investments />
           <Text>{Tabs.investments}</Text>
         </ItemContenair>
-        <ItemContenair to="/" onClick={autoClose}>
+        <ItemContenair to="/" onClick={() => setNavBar(false)}>
           <Rectangle $selected={onglet === "/t"} />
           <CreditCards />
           <Text>{Tabs.creditCards}</Text>
         </ItemContenair>
         <ItemContenair
           to="/setting"
-          onClick={autoClose}
+          onClick={() => setNavBar(false)}
           $selected={onglet === "/setting"}
         >
           <Rectangle $selected={onglet === "/setting"} />
           <Setting />
           <Text>{Tabs.setting}</Text>
         </ItemContenair>
-        <Actualisation onClick={actualisation}>
-          Actualiser les données
+        <Actualisation
+          onClick={(event) => {
+            actualisation()
+            setIsLoading(true)
+          }}
+        >
+          {isLoading ? "loading..." : responseServer}
         </Actualisation>
         {isConnected === true ? (
           <Link
