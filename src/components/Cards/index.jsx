@@ -64,9 +64,8 @@ const Slide = styled(SwiperSlide)`
 `
 
 function Cards() {
-  const response = useFetch(`${address.serveur}/api/donnees/snapshot`)
+  const response = useFetch(`${address.serveur}/api/donnees/last-snapshot`)
   const data = response.data
-  console.log(data)
 
   return (
     <div>

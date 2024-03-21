@@ -15,6 +15,8 @@ const colors = {
   selected: "#1814F3",
   notSelected: "#718EBF",
   notSelectedNavBar: "#b1b1b1",
+  chartFillBackground: "rgba(45, 96, 255, 0.3)",
 }
+// "linear-gradient(rgba(45, 96, 255, 0.5), rgba(45, 96, 255, 0))",
 
 export default colors
