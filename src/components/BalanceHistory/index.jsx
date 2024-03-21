@@ -43,32 +43,11 @@ function BalanceHistory() {
     })
       .then((response) => response.json())
       .then((data) => {
-        let data0 = data[0] === undefined ? 0 : data[0].totalAssetOfBtc
-        let data1 =
-          data[1] === undefined
-            ? data[0].totalAssetOfBtc
-            : data[1].totalAssetOfBtc
-        let data2 =
-          data[2] === undefined
-            ? data[0].totalAssetOfBtc
-            : data[2].totalAssetOfBtc
-        let data3 =
-          data[3] === undefined
-            ? data[0].totalAssetOfBtc
-            : data[3].totalAssetOfBtc
-        let data4 =
-          data[4] === undefined
-            ? data[0].totalAssetOfBtc
-            : data[4].totalAssetOfBtc
-        let data5 =
-          data[5] === undefined
-            ? data[0].totalAssetOfBtc
-            : data[5].totalAssetOfBtc
-        let data6 =
-          data[6] === undefined
-            ? data[0].totalAssetOfBtc
-            : data[6].totalAssetOfBtc
-        const newDatapoints = [data6, data5, data4, data3, data2, data1, data0]
+        let newDatapoints = []
+        for (let i = 0; i < data.length; i++) {
+          const data0 = data[i].totalAssetOfBtc
+          newDatapoints.push(data0)
+        }
         setDatapoints(newDatapoints)
       })
       .catch((error) => console.log(error))
