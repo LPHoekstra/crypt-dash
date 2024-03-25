@@ -1,14 +1,18 @@
 import styled from "styled-components"
 import { ReactComponent as IconMenu } from "../../assets/iconMenu.svg"
 import logo from "../../assets/image/Murky.jpg"
-import { ReactComponent as SearchIcon } from "../../assets/searchIcon.svg"
 import colors from "../../styles/colors"
 import { useContext, useEffect, useState } from "react"
 import { ConnectedContext, NavBarContext } from "../../context"
 import { Link, useLocation } from "react-router-dom"
+import SearchBar from "./SearchBar"
 
 const HeaderBloc = styled.header`
   padding: 25px 25px 20px 25px;
+
+  @media screen and (min-width: 1024px) {
+    border-bottom: 1px solid ${colors.border};
+  }
 `
 
 const HeaderContenair = styled.div`
@@ -17,45 +21,36 @@ const HeaderContenair = styled.div`
   align-items: center;
 `
 
+const OpenNavBar = styled.div`
+  display: block;
+
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+`
+
 const Logo = styled.img`
   width: 35px;
   height: 35px;
 `
 
-const SearchBarContenair = styled.div`
-  position: relative;
-  height: 40px;
-  margin-top: 20px;
+const SearchBarContenair1 = styled.div`
+  display: none;
+
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
 `
 
-const SearchBar = styled.input`
-  border-radius: 40px;
-  height: 100%;
-  width: 100%;
-  border: none;
-  background-color: ${colors.searchBarBackground};
-  padding: 12px 45px;
-`
+const SearchBarContenair2 = styled.div`
+  display: block;
 
-const PlaceHolder = styled.div`
-  position: absolute;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  top: 50%;
-  left: 20px;
-  transform: translate(0, -50%);
-  pointer-events: none;
-`
-
-const SearchSomething = styled.span`
-  color: ${colors.searchBarText};
-  display: ${(props) => (props.$hideOnFocus ? "none" : "inline")};
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
 `
 
 function Header() {
-  // cache le text "Search for something" dans la bar de recherche
-  const [hideOnFocus, setHideOnFocus] = useState(false)
   // sur quelle page on se situe
   const [page, setPage] = useState()
   const location = useLocation()
@@ -76,10 +71,13 @@ function Header() {
   return (
     <HeaderBloc>
       <HeaderContenair>
-        <div onClick={() => setNavBar(true)}>
+        <OpenNavBar onClick={() => setNavBar(true)}>
           <IconMenu />
-        </div>
+        </OpenNavBar>
         <h1>{page === "" ? "Overview" : page}</h1>
+        <SearchBarContenair1>
+          <SearchBar />
+        </SearchBarContenair1>
         {isConnected === true ? (
           <Link to="/Setting">
             <Logo src={logo} alt="Logo" />
@@ -90,24 +88,9 @@ function Header() {
           </Link>
         )}
       </HeaderContenair>
-      <SearchBarContenair>
-        <SearchBar
-          type="search"
-          name="searchbar"
-          id="searchbar"
-          onFocus={() => setHideOnFocus(true)}
-          onBlur={(event) => {
-            setHideOnFocus(false)
-            event.target.value = ""
-          }}
-        />
-        <PlaceHolder>
-          <SearchIcon />
-          <SearchSomething $hideOnFocus={hideOnFocus}>
-            Search for something
-          </SearchSomething>
-        </PlaceHolder>
-      </SearchBarContenair>
+      <SearchBarContenair2>
+        <SearchBar />
+      </SearchBarContenair2>
     </HeaderBloc>
   )
 }

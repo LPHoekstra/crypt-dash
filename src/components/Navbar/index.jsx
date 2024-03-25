@@ -21,6 +21,17 @@ const NavBarContenair = styled.div`
   width: 300px;
   z-index: 9999;
   transition: transform 200ms ease-in-out;
+
+  @media screen and (min-width: 1024px) {
+    position: inherit;
+    transform: translateX(0);
+    border-right: 1px solid ${colors.border};
+
+    img {
+      display: none;
+    }
+  }
+
   ${(props) =>
     props.$navBar
       ? "transform: translateX(0)"

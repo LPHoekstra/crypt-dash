@@ -16,6 +16,7 @@ const colors = {
   notSelected: "#718EBF",
   notSelectedNavBar: "#b1b1b1",
   chartFillBackground: "rgba(45, 96, 255, 0.3)",
+  border: "#DFEAF2",
 }
 // "linear-gradient(rgba(45, 96, 255, 0.5), rgba(45, 96, 255, 0))",
 
