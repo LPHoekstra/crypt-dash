@@ -28,6 +28,16 @@ const Title = styled.h2`
   margin-bottom: 12px;
 `
 
+const GraphContenair = styled.div`
+  background-color: ${colors.moduleBackground};
+  border-radius: 25px;
+  padding: 25px;
+`
+// @media screen and (min-width: 1024px) {
+//   width: 550px;
+//   height: 275px;
+// }
+
 function BalanceHistory() {
   const token = Cookies.get("token")
   const [datapoints, setDatapoints] = useState([1, 1, 1, 1, 1, 1, 1])
@@ -74,7 +84,9 @@ function BalanceHistory() {
   return (
     <div>
       <Title>Balance History</Title>
-      <Line data={data} options={options} />
+      <GraphContenair>
+        <Line data={data} options={options} />
+      </GraphContenair>
     </div>
   )
 }

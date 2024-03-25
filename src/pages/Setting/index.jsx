@@ -54,9 +54,10 @@ function Setting() {
   const { isConnected } = useContext(ConnectedContext)
   const [onglet, setOnglet] = useState(Tabs.editProfile)
 
-  return isConnected === true ? (
+  return isConnected ? (
     <Background>
       <SecondaryBackground>
+        {/* Headers des settings */}
         <HeadersSettingContenair>
           <HeadersList>
             {Object.values(Tabs).map((tab) => (
@@ -72,6 +73,8 @@ function Setting() {
             ))}
           </HeadersList>
         </HeadersSettingContenair>
+
+        {/* Contenue de la page */}
         {onglet === Tabs.editProfile ? (
           <FormSignup />
         ) : onglet === Tabs.preference ? (
