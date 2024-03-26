@@ -7,7 +7,7 @@ import { ConnectedContext, NavBarContext } from "../../context"
 import { Link, useLocation } from "react-router-dom"
 import SearchBar from "./SearchBar"
 
-const HeaderBloc = styled.header`
+const Headers = styled.header`
   padding: 25px 25px 20px 25px;
 
   @media screen and (min-width: 1024px) {
@@ -26,6 +26,13 @@ const OpenNavBar = styled.div`
 
   @media screen and (min-width: 1024px) {
     display: none;
+  }
+`
+
+const Option = styled.div`
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    gap: 30px;
   }
 `
 
@@ -69,29 +76,36 @@ function Header() {
   }, [location.pathname])
 
   return (
-    <HeaderBloc>
+    <Headers>
       <HeaderContenair>
+        {/* localisation de la page et ouverture du navbar mobile */}
         <OpenNavBar onClick={() => setNavBar(true)}>
           <IconMenu />
         </OpenNavBar>
         <h1>{page === "" ? "Overview" : page}</h1>
-        <SearchBarContenair1>
-          <SearchBar />
-        </SearchBarContenair1>
-        {isConnected === true ? (
-          <Link to="/Setting">
-            <Logo src={logo} alt="Logo" />
-          </Link>
-        ) : (
-          <Link to="/login">
-            <Logo src={logo} alt="Logo" />
-          </Link>
-        )}
+
+        {/* bloc header droite desktop */}
+        <Option>
+          <SearchBarContenair1>
+            <SearchBar />
+          </SearchBarContenair1>
+          {isConnected === true ? (
+            <Link to="/Setting">
+              <Logo src={logo} alt="Logo" />
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Logo src={logo} alt="Logo" />
+            </Link>
+          )}
+        </Option>
       </HeaderContenair>
+
+      {/* search bar mobile */}
       <SearchBarContenair2>
         <SearchBar />
       </SearchBarContenair2>
-    </HeaderBloc>
+    </Headers>
   )
 }
 

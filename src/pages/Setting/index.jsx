@@ -23,6 +23,7 @@ const HeadersSetting = styled.li`
   font-weight: 500;
   margin-left: 7px;
   margin-right: 7px;
+  cursor: pointer;
   color: ${colors.notSelected};
   ${(props) =>
     props.$selected

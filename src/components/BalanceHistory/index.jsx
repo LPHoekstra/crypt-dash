@@ -40,8 +40,8 @@ const GraphContenair = styled.div`
 
 function BalanceHistory() {
   const token = Cookies.get("token")
-  const [datapoints, setDatapoints] = useState([1, 1, 1, 1, 1, 1, 1])
-  const labels = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]
+  const [datapoints, setDatapoints] = useState([])
+  const [labels, setLabels] = useState([])
 
   useEffect(() => {
     fetch(`${address.serveur}/api/donnees/seven-last-snapshot`, {
@@ -53,11 +53,17 @@ function BalanceHistory() {
     })
       .then((response) => response.json())
       .then((data) => {
+        // créations des tableaux "labels" et "datapoints" pour le graph
         let newDatapoints = []
+        let newLabels = []
         for (let i = 0; i < data.length; i++) {
           const data0 = data[i].totalAssetOfBtc
-          newDatapoints.push(data0)
+          newDatapoints.unshift(data0)
+
+          const dateJour = data[i].date.day
+          newLabels.unshift(dateJour)
         }
+        setLabels(newLabels)
         setDatapoints(newDatapoints)
       })
       .catch((error) => console.log(error))

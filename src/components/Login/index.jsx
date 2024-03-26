@@ -15,9 +15,17 @@ const Signup = styled(Link)`
 
 const Form = styled.form`
   padding: 45px;
+  max-width: 450px;
+  margin: auto;
+  gap: 10px;
 `
-// Récupérer les champs entrer et transformer le tout en JSON pour pouvoir récupérer la réponse serveur
-// créer un hooks pour les requêtes POST
+
+const LabelInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 1024px) {
+  }
+`
 
 async function submitForm(req) {
   try {
@@ -80,7 +88,7 @@ function Login() {
             .catch((error) => console.log(error))
         }}
       >
-        <div>
+        <LabelInput>
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -89,8 +97,8 @@ function Login() {
             autoComplete="email"
             onBlur={inputChange}
           />
-        </div>
-        <div>
+        </LabelInput>
+        <LabelInput>
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -98,7 +106,7 @@ function Login() {
             id="password"
             onBlur={inputChange}
           />
-        </div>
+        </LabelInput>
         <button type="submit">Login</button>
         <span>{responseServer}</span>
       </Form>
