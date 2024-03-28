@@ -6,6 +6,7 @@ import DashBoard from "./pages/Dashboard"
 import Login from "./components/Login"
 import Setting from "./pages/Setting"
 import Signup from "./pages/Signup"
+import { ActualisationProvider } from "./context"
 
 const Div = styled.div`
   @media screen and (min-width: 1024px) {
@@ -23,16 +24,18 @@ function App() {
   return (
     <Div>
       <Router>
-        <NavBar />
-        <RouteContenair>
-          <Header />
-          <Routes>
-            <Route path="/" element={<DashBoard />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/setting" element={<Setting />} />
-          </Routes>
-        </RouteContenair>
+        <ActualisationProvider>
+          <NavBar />
+          <RouteContenair>
+            <Header />
+            <Routes>
+              <Route path="/" element={<DashBoard />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/setting" element={<Setting />} />
+            </Routes>
+          </RouteContenair>
+        </ActualisationProvider>
       </Router>
     </Div>
   )

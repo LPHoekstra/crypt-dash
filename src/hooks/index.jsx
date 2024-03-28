@@ -35,7 +35,7 @@ export function useFetch(url) {
     }
 
     fetchData()
-  }, [url, token, isConnected])
+  }, [])
   return { isLoading, data, error }
 }
 

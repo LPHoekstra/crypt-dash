@@ -40,6 +40,10 @@ const Button = styled.button`
   }
 `
 
+export function sum(a, b) {
+  return (a += b)
+}
+
 function FormSignup() {
   const { isConnected } = useContext(ConnectedContext)
   const [formData, setFormData] = useState({

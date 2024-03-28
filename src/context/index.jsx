@@ -13,6 +13,21 @@ export const NavBarProvider = ({ children }) => {
   )
 }
 
+export const ActualisationContext = createContext()
+
+export const ActualisationProvider = ({ children }) => {
+  const [actualisationDonnees, setActualisationDonnees] = useState(false)
+
+  return (
+    <ActualisationContext.Provider
+      value={{ actualisationDonnees, setActualisationDonnees }}
+    >
+      {children}
+    </ActualisationContext.Provider>
+  )
+}
+
+// Context de vérification de connexion si cookie "token" est présent
 export const ConnectedContext = createContext()
 
 export const ConnectedProvider = ({ children }) => {

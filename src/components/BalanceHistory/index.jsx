@@ -11,8 +11,9 @@ import { Line } from "react-chartjs-2"
 import colors from "../../styles/colors"
 import address from "../../styles/address"
 import Cookies from "js-cookie"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
+import { ActualisationContext } from "../../context"
 
 ChartJS.register(
   CategoryScale,
@@ -42,6 +43,9 @@ function BalanceHistory() {
   const token = Cookies.get("token")
   const [datapoints, setDatapoints] = useState([])
   const [labels, setLabels] = useState([])
+  const { actualisationDonnees } = useContext(ActualisationContext)
+
+  useEffect(() => {}, [actualisationDonnees])
 
   useEffect(() => {
     fetch(`${address.serveur}/api/donnees/seven-last-snapshot`, {

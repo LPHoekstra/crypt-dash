@@ -8,7 +8,11 @@ import { ReactComponent as Setting } from "../../assets/component/NavBar/Setting
 import { ReactComponent as CreditCards } from "../../assets/component/NavBar/CreditCards.svg"
 import close from "../../assets/component/NavBar/close.png"
 import { useContext, useEffect, useState } from "react"
-import { ConnectedContext, NavBarContext } from "../../context"
+import {
+  ActualisationContext,
+  ConnectedContext,
+  NavBarContext,
+} from "../../context"
 import { Link, useLocation } from "react-router-dom"
 import Cookies from "js-cookie"
 import address from "../../styles/address"
@@ -107,6 +111,7 @@ function NavBar() {
   const [onglet, setOnglet] = useState(location.pathname)
   const { navBar, setNavBar } = useContext(NavBarContext)
   const { isConnected, setIsConnected } = useContext(ConnectedContext)
+  const { setActualisationDonnees } = useContext(ActualisationContext)
   // changement de location au changement de page
   useEffect(() => {
     setOnglet(location.pathname)
@@ -191,6 +196,7 @@ function NavBar() {
           onClick={(event) => {
             actualisation()
             setIsLoading(true)
+            setActualisationDonnees(true)
           }}
         >
           {isLoading ? "loading..." : responseServer}
