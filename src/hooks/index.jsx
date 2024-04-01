@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import Cookies from "js-cookie"
 import { ConnectedContext } from "../context"
+import { useLocation } from "react-router"
 
 export function useFetch(url) {
   const [data, setData] = useState({})
@@ -35,8 +36,25 @@ export function useFetch(url) {
     }
 
     fetchData()
-  }, [])
+  }, [isConnected, token, url])
   return { isLoading, data, error }
+}
+
+export function usePage() {
+  const [page, setPage] = useState("Overview")
+  const location = useLocation()
+
+  useEffect(() => {
+    const firstLetterMaj = (string) => {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+    const path = location.pathname.split("/")
+    const final = path[1]
+    const addressMaj = firstLetterMaj(final)
+    setPage(addressMaj)
+  }, [location.pathname])
+
+  return page
 }
 
 // export function PostFetch(url, req) {

@@ -41,11 +41,11 @@ export const ConnectedProvider = ({ children }) => {
       if (cookie.startsWith(`token=`)) {
         // Récupère la valeur du cookie en excluant le nom
         setIsConnected(true)
-        console.log("connecté !")
+        // console.log("connecté !")
       } else {
         // Si le cookie spécifié n'est pas trouvé, l'utilisateur n'est pas connecté
         setIsConnected(false)
-        console.log("non connecté !")
+        // console.log("non connecté !")
       }
     }
   }, [])

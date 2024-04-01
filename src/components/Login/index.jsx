@@ -55,7 +55,6 @@ function Login() {
     email: "",
     password: "",
   })
-  console.log(formData)
 
   const inputChange = (e) => {
     const { name, value } = e.target
@@ -69,7 +68,7 @@ function Login() {
   const { isConnected, setIsConnected } = useContext(ConnectedContext)
 
   return isConnected ? (
-    <Navigate to="/" />
+    <Navigate to="/overview" />
   ) : (
     <div>
       <Form
@@ -80,7 +79,7 @@ function Login() {
               if (result !== "Email ou mot de passe incorrecte") {
                 console.log("connecté pendant 24 heure")
                 setIsConnected(true)
-                setResponseServer(<Navigate to="/" />)
+                setResponseServer(<Navigate to="/overview" />)
               } else {
                 setResponseServer("Email ou mot de passe incorrect")
               }

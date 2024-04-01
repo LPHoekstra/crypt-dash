@@ -41,8 +41,8 @@ const GraphContenair = styled.div`
 
 function BalanceHistory() {
   const token = Cookies.get("token")
-  const [datapoints, setDatapoints] = useState([])
-  const [labels, setLabels] = useState([])
+  const [datapoints, setDatapoints] = useState([1, 2, 3])
+  const [labels, setLabels] = useState([1, 2, 3])
   const { actualisationDonnees } = useContext(ActualisationContext)
 
   useEffect(() => {}, [actualisationDonnees])

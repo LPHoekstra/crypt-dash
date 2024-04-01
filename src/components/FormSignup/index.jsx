@@ -40,12 +40,32 @@ const Button = styled.button`
   }
 `
 
-export function sum(a, b) {
-  return (a += b)
+export const sendForm = (formData, isConnected) => {
+  const token = Cookies.get("token")
+  const apiUrl = isConnected
+    ? `${address.serveur}/api/auth/update`
+    : `${address.serveur}/api/auth/signup`
+
+  fetch(apiUrl, {
+    method: isConnected ? "PUT" : "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Erreur réseau")
+      }
+      return response.json()
+    })
+    .catch((error) => console.error("Erreur :", error))
 }
 
-function FormSignup() {
+export function FormSignup() {
   const { isConnected } = useContext(ConnectedContext)
+
   const [formData, setFormData] = useState({
     yourName: "",
     userName: "",
@@ -82,150 +102,122 @@ function FormSignup() {
     [formData]
   )
 
-  if (response.isLoading) {
-    return (
-      <div>
-        <h2>Loading...</h2>
-      </div>
-    )
-  } else {
-    const sendForm = (formData) => {
-      const token = Cookies.get("token")
-      const apiUrl = isConnected
-        ? `${address.serveur}/api/auth/update`
-        : `${address.serveur}/api/auth/signup`
-
-      console.log(formData)
-      fetch(apiUrl, {
-        method: isConnected ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Erreur réseau")
-          }
-          return response.json()
-        })
-        .catch((error) => console.error("Erreur :", error))
-    }
-
-    return (
-      <div>
-        <Form
-          onSubmit={(event) => {
-            event.preventDefault()
-            sendForm(formData)
-          }}
-        >
-          <ByTwo>
-            <LabelInput>
-              <label htmlFor="yourName">Your Name</label>
-              <input
-                type="text"
-                name="yourName"
-                id="yourName"
-                autoComplete="name"
-                defaultValue={data.yourName}
-                onBlur={inputChange}
-              />
-            </LabelInput>
-            <LabelInput>
-              <label htmlFor="userName">User Name</label>
-              <input
-                type="text"
-                name="userName"
-                id="userName"
-                autoComplete="username"
-                defaultValue={data.userName}
-                onBlur={inputChange}
-              />
-            </LabelInput>
-          </ByTwo>
-          <ByTwo>
-            <LabelInput>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                defaultValue={data.email}
-                onBlur={inputChange}
-              />
-            </LabelInput>
-            <LabelInput>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                autoComplete="new-password"
-                defaultValue="**********"
-                onBlur={inputChange}
-              />
-            </LabelInput>
-          </ByTwo>
-          <ByTwo>
-            <LabelInput>
-              <label htmlFor="dateBirth">Date of Birth</label>
-              <input type="date" name="dateBirth" id="dateBirth" />
-            </LabelInput>
-            <LabelInput>
-              <label htmlFor="address">Address</label>
-              <input
-                type="text"
-                name="address"
-                id="address"
-                autoComplete="street-address"
-                defaultValue={data.address}
-                onBlur={inputChange}
-              />
-            </LabelInput>
-          </ByTwo>
-          <ByTwo>
-            <LabelInput>
-              <label htmlFor="city">City</label>
-              <input
-                type="text"
-                name="city"
-                id="city"
-                defaultValue={data.city}
-                onBlur={inputChange}
-              />
-            </LabelInput>
-            <LabelInput>
-              <label htmlFor="postalCode">Postal Code</label>
-              <input
-                type="number"
-                name="postalCode"
-                id="postalCode"
-                autoComplete="postal-code"
-                defaultValue={data.postalCode}
-                onBlur={inputChange}
-              />
-            </LabelInput>
-          </ByTwo>
+  return response.isLoading ? (
+    <div>
+      <h2>Loading...</h2>
+    </div>
+  ) : (
+    <div>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault()
+          sendForm(formData, isConnected)
+        }}
+      >
+        <ByTwo>
           <LabelInput>
-            <label htmlFor="country">Country</label>
+            <label htmlFor="yourName">Your Name</label>
             <input
               type="text"
-              name="country"
-              id="country"
-              autoComplete="country-name"
-              defaultValue={data.country}
+              name="yourName"
+              id="yourName"
+              autoComplete="name"
+              defaultValue={data.yourName}
               onBlur={inputChange}
             />
           </LabelInput>
-          <Button type="submit">
-            {isConnected === true ? "Save" : "Create Account"}
-          </Button>
-        </Form>
-      </div>
-    )
-  }
+          <LabelInput>
+            <label htmlFor="userName">User Name</label>
+            <input
+              type="text"
+              name="userName"
+              id="userName"
+              autoComplete="username"
+              defaultValue={data.userName}
+              onBlur={inputChange}
+            />
+          </LabelInput>
+        </ByTwo>
+        <ByTwo>
+          <LabelInput>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              defaultValue={data.email}
+              onBlur={inputChange}
+            />
+          </LabelInput>
+          <LabelInput>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autoComplete="new-password"
+              defaultValue="**********"
+              onBlur={inputChange}
+            />
+          </LabelInput>
+        </ByTwo>
+        <ByTwo>
+          <LabelInput>
+            <label htmlFor="dateBirth">Date of Birth</label>
+            <input type="date" name="dateBirth" id="dateBirth" />
+          </LabelInput>
+          <LabelInput>
+            <label htmlFor="address">Address</label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              autoComplete="street-address"
+              defaultValue={data.address}
+              onBlur={inputChange}
+            />
+          </LabelInput>
+        </ByTwo>
+        <ByTwo>
+          <LabelInput>
+            <label htmlFor="city">City</label>
+            <input
+              type="text"
+              name="city"
+              id="city"
+              defaultValue={data.city}
+              onBlur={inputChange}
+            />
+          </LabelInput>
+          <LabelInput>
+            <label htmlFor="postalCode">Postal Code</label>
+            <input
+              type="number"
+              name="postalCode"
+              id="postalCode"
+              autoComplete="postal-code"
+              defaultValue={data.postalCode}
+              onBlur={inputChange}
+            />
+          </LabelInput>
+        </ByTwo>
+        <LabelInput>
+          <label htmlFor="country">Country</label>
+          <input
+            type="text"
+            name="country"
+            id="country"
+            autoComplete="country-name"
+            defaultValue={data.country}
+            onBlur={inputChange}
+          />
+        </LabelInput>
+        <Button type="submit">
+          {isConnected === true ? "Save" : "Create Account"}
+        </Button>
+      </Form>
+    </div>
+  )
 }
 
 export default FormSignup

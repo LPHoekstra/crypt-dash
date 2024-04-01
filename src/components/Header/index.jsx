@@ -2,10 +2,11 @@ import styled from "styled-components"
 import { ReactComponent as IconMenu } from "../../assets/iconMenu.svg"
 import logo from "../../assets/image/Murky.jpg"
 import colors from "../../styles/colors"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { ConnectedContext, NavBarContext } from "../../context"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import SearchBar from "./SearchBar"
+import { usePage } from "../../hooks"
 
 const Headers = styled.header`
   padding: 25px 25px 20px 25px;
@@ -58,31 +59,18 @@ const SearchBarContenair2 = styled.div`
 `
 
 function Header() {
-  // sur quelle page on se situe
-  const [page, setPage] = useState()
-  const location = useLocation()
-
-  const { setNavBar } = useContext(NavBarContext)
   const { isConnected } = useContext(ConnectedContext)
-
-  useEffect(() => {
-    const firstLetterMaj = (string) => {
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    }
-    const path = location.pathname.split("/")
-    const final = path[1]
-    const addressMaj = firstLetterMaj(final)
-    setPage(addressMaj)
-  }, [location.pathname])
+  const { setNavBar } = useContext(NavBarContext)
+  const page = usePage()
 
   return (
     <Headers>
       <HeaderContenair>
         {/* localisation de la page et ouverture du navbar mobile */}
-        <OpenNavBar onClick={() => setNavBar(true)}>
+        <OpenNavBar data-testid="nav" onClick={() => setNavBar(true)}>
           <IconMenu />
         </OpenNavBar>
-        <h1>{page === "" ? "Overview" : page}</h1>
+        <h1>{page}</h1>
 
         {/* bloc header droite desktop */}
         <Option>
