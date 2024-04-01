@@ -27,29 +27,32 @@ const LabelInput = styled.div`
   }
 `
 
-async function submitForm(req) {
+// Fetch
+export async function submitForm(formData) {
   try {
     const response = await fetch(`${address.serveur}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(req),
+      body: JSON.stringify(formData),
     })
+
     const data = await response.json()
-    if (data.message) {
-      return data.message
-    } else {
+    // si un token est renvoyer par le serveur et donc identification réussi
+    if (data.token) {
       const token = data.token
-      console.log(data)
       Cookies.set("token", token, { expires: 1 })
-      return data.userId
     }
+    // renvoie le message du serveur concernant le statue
+    return data.message
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return "Erreur réseau"
   }
 }
 
+// JSX
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -76,12 +79,11 @@ function Login() {
           event.preventDefault()
           submitForm(formData)
             .then((result) => {
-              if (result !== "Email ou mot de passe incorrecte") {
-                console.log("connecté pendant 24 heure")
+              if (result === "Connecté !") {
                 setIsConnected(true)
                 setResponseServer(<Navigate to="/overview" />)
               } else {
-                setResponseServer("Email ou mot de passe incorrect")
+                setResponseServer(result)
               }
             })
             .catch((error) => console.log(error))
