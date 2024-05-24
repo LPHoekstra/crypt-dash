@@ -6,13 +6,6 @@ import Cookies from "js-cookie"
 import { ConnectedContext } from "../../context"
 import address from "../../styles/address"
 
-const Signup = styled(Link)`
-  text-align: center;
-  text-decoration: underline;
-  display: block;
-  color: ${colors.label};
-`
-
 const Form = styled.form`
   padding: 45px;
   max-width: 450px;
@@ -23,8 +16,14 @@ const Form = styled.form`
 const LabelInput = styled.div`
   display: flex;
   flex-direction: column;
-  @media screen and (min-width: 1024px) {
-  }
+`
+
+const Signup = styled(Link)`
+  margin: 0 auto;
+  width: 5%;
+  text-decoration: underline;
+  display: block;
+  color: ${colors.label};
 `
 
 // Fetch

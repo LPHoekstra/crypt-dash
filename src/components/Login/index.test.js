@@ -38,4 +38,16 @@ describe("Login", () => {
       body: JSON.stringify(formData),
     })
   })
+
+  // it("should submit the form correctly", async () => {
+  //   const mockSubmitForm = jest.fn().mockResolvedValue("Connecté !")
+
+  //   render(
+  //     <ConnectedProvider>
+  //       <Login />
+  //     </ConnectedProvider>
+  //   )
+
+  //   fireEvent.submit()
+  // })
 })
