@@ -45,36 +45,36 @@ body {
     form {
     display: flex;
     flex-direction: column;
-    
-        div {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 16px;
-        
+         
         label {
             margin-bottom: 9px;
             font-weight: 400;
             font-size: 13px;
+
+            @media screen and (min-width: 1024px) {
+                font-size: 16px;
+            }
+
         }
         
         input {
             border-radius: 10px;
             border: 1px solid ${colors.inputBorder};
             padding: 13px;
-            }
-        }   
+            } 
         
-        button {
-            font-size: 15px;
-            font-weight: 500;
-            padding: 11px;
-            margin-top: 4px;
-            text-align: center;
-            background-color: #1814f3;
-            border: none;
-            border-radius: 9px;
-            color: ${colors.cardsText1};
-        }
+    }
+    
+    button {
+        font-size: 15px;
+        font-weight: 500;
+        padding: 11px;
+        margin-top: 4px;
+        text-align: center;
+        background-color: #1814f3;
+        border: none;
+        border-radius: 9px;
+        color: ${colors.cardsText1};
     }
 }
 `

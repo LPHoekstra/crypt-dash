@@ -3,9 +3,69 @@ import { ConnectedContext } from "../../context"
 import { useFetch } from "../../hooks"
 import address from "../../styles/address"
 import Cookies from "js-cookie"
+import styled from "styled-components"
 
-function FormSignup() {
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 1024px) {
+    padding-top: 52px;
+    padding-left: 215px;
+  }
+`
+
+const ByTwo = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+    gap: 29px;
+  }
+`
+
+const LabelInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  width: 100%;
+`
+
+const Button = styled.button`
+  @media screen and (min-width: 1024px) {
+    width: 190px;
+    height: 50px;
+    margin-left: auto;
+  }
+`
+
+export const sendForm = (formData, isConnected) => {
+  const token = Cookies.get("token")
+  const apiUrl = isConnected
+    ? `${address.serveur}/api/auth/update`
+    : `${address.serveur}/api/auth/signup`
+
+  fetch(apiUrl, {
+    method: isConnected ? "PUT" : "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Erreur réseau")
+      }
+      return response.json()
+    })
+    .catch((error) => console.error("Erreur :", error))
+}
+
+export function FormSignup() {
   const { isConnected } = useContext(ConnectedContext)
+
   const [formData, setFormData] = useState({
     yourName: "",
     userName: "",
@@ -42,46 +102,20 @@ function FormSignup() {
     [formData]
   )
 
-  if (response.isLoading) {
-    return (
-      <div>
-        <h2>Loading...</h2>
-      </div>
-    )
-  } else {
-    const sendForm = (formData) => {
-      const token = Cookies.get("token")
-      const apiUrl = isConnected
-        ? `${address.serveur}/api/auth/update`
-        : `${address.serveur}/api/auth/signup`
-
-      console.log(formData)
-      fetch(apiUrl, {
-        method: isConnected ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Erreur réseau")
-          }
-          return response.json()
-        })
-        .catch((error) => console.error("Erreur :", error))
-    }
-
-    return (
-      <div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            sendForm(formData)
-          }}
-        >
-          <div>
+  return response.isLoading ? (
+    <div>
+      <h2>Loading...</h2>
+    </div>
+  ) : (
+    <div>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault()
+          sendForm(formData, isConnected)
+        }}
+      >
+        <ByTwo>
+          <LabelInput>
             <label htmlFor="yourName">Your Name</label>
             <input
               type="text"
@@ -91,8 +125,8 @@ function FormSignup() {
               defaultValue={data.yourName}
               onBlur={inputChange}
             />
-          </div>
-          <div>
+          </LabelInput>
+          <LabelInput>
             <label htmlFor="userName">User Name</label>
             <input
               type="text"
@@ -102,8 +136,10 @@ function FormSignup() {
               defaultValue={data.userName}
               onBlur={inputChange}
             />
-          </div>
-          <div>
+          </LabelInput>
+        </ByTwo>
+        <ByTwo>
+          <LabelInput>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -112,8 +148,8 @@ function FormSignup() {
               defaultValue={data.email}
               onBlur={inputChange}
             />
-          </div>
-          <div>
+          </LabelInput>
+          <LabelInput>
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -123,12 +159,14 @@ function FormSignup() {
               defaultValue="**********"
               onBlur={inputChange}
             />
-          </div>
-          <div>
+          </LabelInput>
+        </ByTwo>
+        <ByTwo>
+          <LabelInput>
             <label htmlFor="dateBirth">Date of Birth</label>
             <input type="date" name="dateBirth" id="dateBirth" />
-          </div>
-          <div>
+          </LabelInput>
+          <LabelInput>
             <label htmlFor="address">Address</label>
             <input
               type="text"
@@ -138,8 +176,10 @@ function FormSignup() {
               defaultValue={data.address}
               onBlur={inputChange}
             />
-          </div>
-          <div>
+          </LabelInput>
+        </ByTwo>
+        <ByTwo>
+          <LabelInput>
             <label htmlFor="city">City</label>
             <input
               type="text"
@@ -148,8 +188,8 @@ function FormSignup() {
               defaultValue={data.city}
               onBlur={inputChange}
             />
-          </div>
-          <div>
+          </LabelInput>
+          <LabelInput>
             <label htmlFor="postalCode">Postal Code</label>
             <input
               type="number"
@@ -159,25 +199,25 @@ function FormSignup() {
               defaultValue={data.postalCode}
               onBlur={inputChange}
             />
-          </div>
-          <div>
-            <label htmlFor="country">Country</label>
-            <input
-              type="text"
-              name="country"
-              id="country"
-              autoComplete="country-name"
-              defaultValue={data.country}
-              onBlur={inputChange}
-            />
-          </div>
-          <button type="submit">
-            {isConnected === true ? "Save" : "Create Account"}
-          </button>
-        </form>
-      </div>
-    )
-  }
+          </LabelInput>
+        </ByTwo>
+        <LabelInput>
+          <label htmlFor="country">Country</label>
+          <input
+            type="text"
+            name="country"
+            id="country"
+            autoComplete="country-name"
+            defaultValue={data.country}
+            onBlur={inputChange}
+          />
+        </LabelInput>
+        <Button type="submit">
+          {isConnected === true ? "Save" : "Create Account"}
+        </Button>
+      </Form>
+    </div>
+  )
 }
 
 export default FormSignup

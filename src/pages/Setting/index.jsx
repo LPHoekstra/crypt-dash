@@ -1,9 +1,10 @@
-import styled from "styled-components"
-import colors from "../../styles/colors"
-import FormSignup from "../../components/FormSignup"
 import { useContext, useState } from "react"
-import { ConnectedContext } from "../../context"
 import { Navigate } from "react-router-dom"
+import styled from "styled-components"
+import AddCard from "../../components/AddCard"
+import FormSignup from "../../components/FormSignup"
+import { ConnectedContext } from "../../context"
+import colors from "../../styles/colors"
 
 const Background = styled.div`
   background-color: ${colors.background};
@@ -22,6 +23,7 @@ const HeadersSetting = styled.li`
   font-weight: 500;
   margin-left: 7px;
   margin-right: 7px;
+  cursor: pointer;
   color: ${colors.notSelected};
   ${(props) =>
     props.$selected
@@ -53,9 +55,10 @@ function Setting() {
   const { isConnected } = useContext(ConnectedContext)
   const [onglet, setOnglet] = useState(Tabs.editProfile)
 
-  return isConnected === true ? (
+  return isConnected ? (
     <Background>
       <SecondaryBackground>
+        {/* Headers des settings */}
         <HeadersSettingContenair>
           <HeadersList>
             {Object.values(Tabs).map((tab) => (
@@ -71,10 +74,12 @@ function Setting() {
             ))}
           </HeadersList>
         </HeadersSettingContenair>
+
+        {/* Contenue de la page */}
         {onglet === Tabs.editProfile ? (
           <FormSignup />
         ) : onglet === Tabs.preference ? (
-          <div>preference</div>
+          <AddCard />
         ) : (
           <div>security</div>
         )}

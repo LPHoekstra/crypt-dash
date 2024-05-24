@@ -6,48 +6,57 @@ import Cookies from "js-cookie"
 import { ConnectedContext } from "../../context"
 import address from "../../styles/address"
 
+const Form = styled.form`
+  padding: 45px;
+  max-width: 450px;
+  margin: auto;
+  gap: 10px;
+`
+
+const LabelInput = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 const Signup = styled(Link)`
-  text-align: center;
+  margin: 0 auto;
+  width: 5%;
   text-decoration: underline;
   display: block;
   color: ${colors.label};
 `
 
-const Form = styled.form`
-  padding: 45px;
-`
-// Récupérer les champs entrer et transformer le tout en JSON pour pouvoir récupérer la réponse serveur
-// créer un hooks pour les requêtes POST
-
-async function submitForm(req) {
+// Fetch
+export async function submitForm(formData) {
   try {
     const response = await fetch(`${address.serveur}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(req),
+      body: JSON.stringify(formData),
     })
+
     const data = await response.json()
-    if (data.message) {
-      return data.message
-    } else {
+    // si un token est renvoyer par le serveur et donc identification réussi
+    if (data.token) {
       const token = data.token
-      console.log(data)
       Cookies.set("token", token, { expires: 1 })
-      return data.userId
     }
+    // renvoie le message du serveur concernant le statue
+    return data.message
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return "Erreur réseau"
   }
 }
 
+// JSX
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-  console.log(formData)
 
   const inputChange = (e) => {
     const { name, value } = e.target
@@ -61,7 +70,7 @@ function Login() {
   const { isConnected, setIsConnected } = useContext(ConnectedContext)
 
   return isConnected ? (
-    <Navigate to="/" />
+    <Navigate to="/overview" />
   ) : (
     <div>
       <Form
@@ -69,18 +78,17 @@ function Login() {
           event.preventDefault()
           submitForm(formData)
             .then((result) => {
-              if (result !== "Email ou mot de passe incorrecte") {
-                console.log("connecté pendant 24 heure")
+              if (result === "Connecté !") {
                 setIsConnected(true)
-                setResponseServer(<Navigate to="/" />)
+                setResponseServer(<Navigate to="/overview" />)
               } else {
-                setResponseServer("Email ou mot de passe incorrect")
+                setResponseServer(result)
               }
             })
             .catch((error) => console.log(error))
         }}
       >
-        <div>
+        <LabelInput>
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -89,8 +97,8 @@ function Login() {
             autoComplete="email"
             onBlur={inputChange}
           />
-        </div>
-        <div>
+        </LabelInput>
+        <LabelInput>
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -98,7 +106,7 @@ function Login() {
             id="password"
             onBlur={inputChange}
           />
-        </div>
+        </LabelInput>
         <button type="submit">Login</button>
         <span>{responseServer}</span>
       </Form>

@@ -13,6 +13,21 @@ export const NavBarProvider = ({ children }) => {
   )
 }
 
+export const ActualisationContext = createContext()
+
+export const ActualisationProvider = ({ children }) => {
+  const [actualisationDonnees, setActualisationDonnees] = useState(false)
+
+  return (
+    <ActualisationContext.Provider
+      value={{ actualisationDonnees, setActualisationDonnees }}
+    >
+      {children}
+    </ActualisationContext.Provider>
+  )
+}
+
+// Context de vérification de connexion si cookie "token" est présent
 export const ConnectedContext = createContext()
 
 export const ConnectedProvider = ({ children }) => {
@@ -26,11 +41,11 @@ export const ConnectedProvider = ({ children }) => {
       if (cookie.startsWith(`token=`)) {
         // Récupère la valeur du cookie en excluant le nom
         setIsConnected(true)
-        console.log("connecté !")
+        // console.log("connecté !")
       } else {
         // Si le cookie spécifié n'est pas trouvé, l'utilisateur n'est pas connecté
         setIsConnected(false)
-        console.log("non connecté !")
+        // console.log("non connecté !")
       }
     }
   }, [])

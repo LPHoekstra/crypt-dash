@@ -1,34 +1,20 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import Dashboard from "./pages/Dashboard/index"
 import reportWebVitals from "./reportWebVitals"
 import GlobalStyle from "./styles/GlobalStyle"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Header from "./components/Header"
-import NavBar from "./components/Navbar"
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { ConnectedProvider, NavBarProvider } from "./context"
-import Login from "./components/Login"
-import Setting from "./pages/Setting"
-import Signup from "./pages/Signup"
+import App from "./app"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    <Router>
-      <GlobalStyle />
-      <ConnectedProvider>
-        <NavBarProvider>
-          <NavBar />
-          <Header />
-        </NavBarProvider>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/setting" element={<Setting />} />
-        </Routes>
-      </ConnectedProvider>
-    </Router>
+    <GlobalStyle />
+    <ConnectedProvider>
+      <NavBarProvider>
+        <App></App>
+      </NavBarProvider>
+    </ConnectedProvider>
   </React.StrictMode>
 )
 
